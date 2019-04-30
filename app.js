@@ -3,14 +3,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const cameraRoutes = require('./routes/camera');
-const teddyRoutes = require('./routes/teddy');
-const furnitureRoutes = require('./routes/furniture');
+const postRoutes = require('./routes/post');
+const commentRoutes = require('./routes/comment');
 
 const app = express();
 
 mongoose.connect(
-  'mongodb+srv://will:nAcmfCoHGDgzrCHG@cluster0-pme76.mongodb.net/test?retryWrites=true',
+  'mongodb://localhost/blog?retryWrites=true',
   { useNewUrlParser: true })
   .then(() => {
     console.log('Successfully connected to MongoDB Atlas!');
@@ -31,8 +30,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(bodyParser.json());
 
-app.use('/api/cameras', cameraRoutes);
-app.use('/api/teddies', teddyRoutes);
-app.use('/api/furniture', furnitureRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 
 module.exports = app;
